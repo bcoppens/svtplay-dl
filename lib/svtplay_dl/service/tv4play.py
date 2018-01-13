@@ -9,7 +9,7 @@ import copy
 
 from svtplay_dl.utils.urllib import urlparse, parse_qs, quote_plus
 from svtplay_dl.service import Service, OpenGraphThumbMixin
-from svtplay_dl.utils import is_py2_old, is_py2, filenamify
+from svtplay_dl.utils import filenamify
 from svtplay_dl.fetcher.hls import hlsparse
 from svtplay_dl.fetcher.rtmp import RTMP
 from svtplay_dl.fetcher.hds import hdsparse
@@ -51,10 +51,7 @@ class Tv4play(Service, OpenGraphThumbMixin):
             return
         xml = ET.XML(data.content)
         ss = xml.find("items")
-        if is_py2_old:
-            sa = list(ss.getiterator("item"))
-        else:
-            sa = list(ss.iter("item"))
+        sa = list(ss.iter("item"))
 
         if xml.find("live").text:
             self.options.live = (xml.find("live").text != "false")
@@ -103,10 +100,7 @@ class Tv4play(Service, OpenGraphThumbMixin):
         data = self.http.request("get", url, cookies=self.cookies).content
         xml = ET.XML(data)
         ss = xml.find("items")
-        if is_py2_old:
-            sa = list(ss.getiterator("item"))
-        else:
-            sa = list(ss.iter("item"))
+        sa = list(ss.iter("item"))
         for i in sa:
             if i.find("mediaFormat").text == "mp4":
                 parse = urlparse(i.find("url").text)
@@ -158,8 +152,6 @@ class Tv4play(Service, OpenGraphThumbMixin):
         else:
             show = parse.path[parse.path.find("/", 1)+1:]
         if show and not re.search("%", show):
-            if is_py2 and isinstance(show, unicode):
-                show = show.encode("utf-8")
             show = quote_plus(show)
         return show
 
