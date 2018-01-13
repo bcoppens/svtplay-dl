@@ -115,9 +115,9 @@ class postprocess(object):
                 for stream_num, language in enumerate(langs):
                     arguments += ["-map", str(stream_num + 1), "-c:s:" + str(stream_num), "mov_text", "-metadata:s:s:" + str(stream_num), "language=" + language]
                 if self.subfixes and len(self.subfixes) >= 2:
-                        for subfix in self.subfixes:
-                            subfile = "{0}.srt".format(name + subfix)
-                            cmd += ["-i", subfile]
+                    for subfix in self.subfixes:
+                        subfile = "{0}.srt".format(name + subfix)
+                        cmd += ["-i", subfile]
                 else:
                     subfile = "{0}.srt".format(name)
                     cmd += ["-i", subfile]
