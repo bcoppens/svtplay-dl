@@ -371,7 +371,6 @@ def setup_log(silent, verbose=False):
 
 def main():
     """ Main program """
-    usage = "Usage: %prog [options] [urls]"
     parser = argparse.ArgumentParser(prog="svtplay-dl")
     general = parser.add_argument_group()
 
